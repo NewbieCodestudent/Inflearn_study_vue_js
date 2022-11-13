@@ -1,6 +1,6 @@
 <template>
   <div class="inputBox shadow">
-    <input type="text" v-model="newTofoItem" v-on:keyup.enter="addTodo">
+    <input type="text" v-model="newTodoItem" v-on:keyup.enter="addTodo">
     <span class="addContainer" v-on:click="addTodo">
       <i class="fa-solid fa-plus addBtn"></i>
     </span>
@@ -11,18 +11,15 @@
 export default {
   data: function() {
     return {
-      newTofoItem : ''
+      newTodoItem : ''
     }
   },
   methods: {
     addTodo : function() {
       if (this.newTofoItem !== '') {
-        // 저장하는 로직
-        // 배열화 작업
-        let obj = {completed:false, item:this.newTofoItem};
-        // JSON.stringify로 하는 이유 : obj로 넣으면 object로 안의 내요이 안보이지만 JSON화 하면 배열의 내용을 string으로 풀어서 넣어준다.
-        localStorage.setItem(this.newTofoItem, JSON.stringify(obj));
-        console.log(this.newTofoItem);
+        // $emit : 상위 컴포넌트로 이벤트를 보내는 기능
+        // addTodoItem이라는 이름으로 this.newTodoItem를 보낸다
+        this.$emit('addTodoItem',this.newTodoItem)
         this.clearInput();
       }
     },

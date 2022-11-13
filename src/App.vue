@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <TodoHeader></TodoHeader>
-    <TodoInput></TodoInput>
-    <TodoList></TodoList>
-    <TodoFooter></TodoFooter>
+    <TodoInput v-on:addTodoItem="addOneItem"></TodoInput>
+    <TodoList v-bind:propsdata="todoItems" v-on:removeItem="removeOneItem" v-on:toggleItem="toggleOneItem"></TodoList>
+    <TodoFooter v-on:clearAll="clearAllItems"></TodoFooter>
   </div>
 </template>
 
@@ -14,7 +14,42 @@ import TodoInput from './components/TodoInput.vue'
 import TodoList from './components/TodoList.vue'
 
 export default {
-  el: '#app',
+  data: function() {
+    return {
+      todoItems: []
+    }
+  },
+  methods: {
+    addOneItem: function(todoItem) {
+      let obj = {completed:false, item:todoItem};
+      localStorage.setItem(todoItem, JSON.stringify(obj));
+      this.todoItems.push(obj);
+    },
+    removeOneItem: function(todoItem, index) {
+      localStorage.removeItem(todoItem.item);
+      this.todoItems.splice(index,1);
+    },
+    toggleOneItem : function(todoItem, index) {
+      this.todoItems[index].completed = !this.todoItems[index].completed;
+      localStorage.removeItem(todoItem.item);
+      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+    },
+    clearAllItems:function() {
+      localStorage.clear();
+      this.todoItems = [];
+    }
+  },
+  // 인스턴스가 실행될 때 실행되는 기능
+  created: function() {
+    if(localStorage.length > 0) {
+      for(let i = 0; i < localStorage.length; i++) {
+        if (localStorage.key(i) !== 'loglevel:webpack-dev-sever') {
+          this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+          // console.log(localStorage.key(i));
+        }
+      }
+    }
+  },
   components: {
     'TodoHeader' : TodoHeader,
     'TodoFooter' : TodoFooter,
