@@ -14,27 +14,32 @@ import TodoInput from './components/TodoInput.vue'
 import TodoList from './components/TodoList.vue'
 
 export default {
-  data: function() {
+  data() {
     return {
       todoItems: []
     }
   },
   methods: {
-    addOneItem: function(todoItem) {
+    // 함수 축약
+    // 기본형태 : fun : function() {}
+    // 1. 화살표 함수 : fun : () => {}
+    // 2. 향상된 객체 리터럴(Enhanced Object Literals) : 객체의 속성을 메서드로 사용할 때 function 예약어를 생략하고 생서 가능
+    //     fun() {}
+    addOneItem(todoItem) {
       let obj = {completed:false, item:todoItem};
       localStorage.setItem(todoItem, JSON.stringify(obj));
       this.todoItems.push(obj);
     },
-    removeOneItem: function(todoItem, index) {
+    removeOneItem(todoItem, index) {
       localStorage.removeItem(todoItem.item);
       this.todoItems.splice(index,1);
     },
-    toggleOneItem : function(todoItem, index) {
+    toggleOneItem(todoItem, index) {
       this.todoItems[index].completed = !this.todoItems[index].completed;
       localStorage.removeItem(todoItem.item);
       localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
     },
-    clearAllItems:function() {
+    clearAllItems() {
       localStorage.clear();
       this.todoItems = [];
     }
@@ -51,10 +56,15 @@ export default {
     }
   },
   components: {
-    'TodoHeader' : TodoHeader,
-    'TodoFooter' : TodoFooter,
-    'TodoInput' : TodoInput,
-    'TodoList' : TodoList
+    // 객체의 속성명과 값 명이 동일할 때 축약 가능
+    // 'TodoHeader' : TodoHeader,
+    // 'TodoFooter' : TodoFooter,
+    // 'TodoInput' : TodoInput,
+    // 'TodoList' : TodoList
+    TodoHeader,
+    TodoFooter,
+    TodoInput,
+    TodoList
   }
 }
 </script>

@@ -21,17 +21,18 @@
 <script>
 import AlertModal from './common/AlertModal.vue'
 export default {
-  data: function() {
+  data() {
     return {
       newTodoItem : "",
       showModal : false
     }
   },
   methods: {
-    addTodo : function() {
+    addTodo() {
       if (this.newTodoItem !== '') {
         // $emit : 상위 컴포넌트로 이벤트를 보내는 기능
         // addTodoItem이라는 이름으로 this.newTodoItem를 보낸다
+        console.log(this.newTodoItem)
         this.$emit('addTodoItem',this.newTodoItem)
         this.clearInput();
       } else {
@@ -39,13 +40,13 @@ export default {
         this.showModal = !this.showModal;
       }
     },
-    clearInput: function() {
+    clearInput() {
       // 값 초기화
       this.newTodoItem = '';
     }
   },
   components: {
-    'AlertModal' : AlertModal
+    AlertModal
   }
 }
 </script>
