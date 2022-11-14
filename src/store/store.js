@@ -25,6 +25,11 @@ export const store = new Vuex.Store({
   state: {
     todoItems: storage.fetch()
   },
+  getters: {
+    storedTodoItems(state) {
+      return state.todoItems;
+    }
+  },
   // mutations : state 값을 변경할 수 있는 메서드
   // 호출할 때는 사용할 components에서 commit()으로 호출
   // commit('호출할 메서드','넘길값')
