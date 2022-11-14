@@ -32,8 +32,11 @@ export default {
       if (this.newTodoItem !== '') {
         // $emit : 상위 컴포넌트로 이벤트를 보내는 기능
         // addTodoItem이라는 이름으로 this.newTodoItem를 보낸다
+        // trim 앞뒤 공백을 없어주는 기능
+        // this.$emit('addTodoItem',this.newTodoItem)
         console.log(this.newTodoItem)
-        this.$emit('addTodoItem',this.newTodoItem)
+        const text = this.newTodoItem.trim();
+        this.$store.commit('addOneItem', text);
         this.clearInput();
       } else {
         // showModal를 v-if로 false값을 주어 출력을 안하였기 때문에 true로 바꾸면서 출력
