@@ -50,31 +50,72 @@ export const store = new Vuex.Store({
       state.todoItems = [];
     }
   },
-  // actions : 비동기 처리 로직을 언언하는 메서드, 비동기 로직을 담당하는 mutations
-  // 데이터 요청, promis, es6 async과 같은 비동기 처리는 모두 actions에 선언
-  // actions: {
-  //   test(context) {
-  //     context.commit('mutations의 매서드 명');
-  //   }
-  // }
-  // vue파일에서 this.$store.dispatch('test')로 호출 가능
-  // [ 예제 ]
-  // mutations: {
-  //   setData(state, fetchedData) {
-  //     state.product = fetchedData;
-  //   }
-  // },
-  // actions: {
-  //   fetchProductData(context) {
-  //     return axios.get('https://domain.com/products/1').then(response => comtext.commit('setData', response));
-  //   }
-  // }
-  // vue 파일
-  // methods: {
-  //   getProduct() {
-  //     this.$store.dispatch('fetchProductData')
-  //   }
-  // }
+  /*
+  actions : 비동기 처리 로직을 언언하는 메서드, 비동기 로직을 담당하는 mutations
+  데이터 요청, promis, es6 async과 같은 비동기 처리는 모두 actions에 선언
+  actions: {
+    test(context) {
+      context.commit('mutations의 매서드 명');
+    }
+  }
+  vue파일에서 this.$store.dispatch('test')로 호출 가능
+  [ 예제 ]
+  mutations: {
+    setData(state, fetchedData) {
+      state.product = fetchedData;
+    }
+  },
+  actions: {
+    fetchProductData(context) {
+      return axios.get('https://domain.com/products/1').then(response => comtext.commit('setData', response));
+    }
+  }
+  vue 파일
+  methods: {
+    getProduct() {
+      this.$store.dispatch('fetchProductData')
+    }
+  }
+  */
 });
 
 // vuex는 전역에서 사용할 수 있는 component라고 생각하면 된다.
+
+/* 
+vuex 헬퍼
+vuex에 있는 로직을 호출할때 this.$store.commit('toggleOneItem',{todoItem, index}); 처럼
+긴 문자로 호출하지 않고 간략하게 호출 할 수 있도록 돋는 기능
+
+[ 예제 ]
+<template>
+  <p>{{this.num}}</p> == <p>{{this.$store.state.num}}</p>
+</template>
+App.vue에서
+import {mapState} from 'vuex'
+import {mapGetters} from 'vuex'
+import {mapMutations} from 'vuex'
+import {mapActions} from 'vuex'
+
+export default {
+  computed() {
+    ...mapState(['state이름']),
+    ...mapGetters(['getter이름'])
+  },
+  methods: {
+    ...mapMutations(['mutations이름']),
+    ...mapActions(['actions이름'])
+  }
+}
+... : Object Spread Operator(전개구문)
+배열이나 문자열과 같이 반복 가능한 문자를 0개 이상의 인수 (함수로 호출할 경우) 또는
+요소 (배열 리터럴의 경우)로 확장하여, 0개 이상의 키-값의 쌍으로 객체로 확장
+[ 예제 ]
+var arr = [1, 2, 3];
+var arr2 = [...arr]; // arr.slice() 와 유사
+arr2.push(4);
+
+arr2 은 [1, 2, 3, 4] 이 됨
+arr 은 영향을 받지 않고 남아 있음
+[ 참고 ]
+https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+*/
