@@ -20,6 +20,7 @@
 
 <script>
 import AlertModal from './common/AlertModal.vue'
+
 export default {
   data() {
     return {
